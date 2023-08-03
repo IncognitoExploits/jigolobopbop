@@ -1,0 +1,425 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local ScriptWindow = OrionLib:MakeWindow({Name = "Arcade Haven", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+-- Paycheck
+
+local PaycheckTab = ScriptWindow:MakeTab({
+	Name = "Paycheck",
+	Icon = "rbxassetid://14264899686",
+	PremiumOnly = false
+})
+
+local PaycheckSection = PaycheckTab:AddSection({
+	Name = "Paycheck"
+})
+
+local AntiTaboutPaycheckFreeze = false
+PaycheckSection:AddToggle({
+	Name = "Anti Tabout Paycheck Freeze",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			AntiTaboutPaycheckFreeze = true
+			OrionLib:MakeNotification({
+				Name = "Paycheck Notification",
+				Content = "Anti Tabout Paycheck Freezing Enabled",
+				Image = "rbxassetid://14264899686",
+				Time = 5
+			})
+			
+		else
+			AntiTaboutPaycheckFreeze = false
+			OrionLib:MakeNotification({
+				Name = "Paycheck Notification",
+				Content = "Anti Tabout Paycheck Freezing Disabled",
+				Image = "rbxassetid://14264899686",
+				Time = 5
+			})
+			
+		end
+		
+		while AntiTaboutPaycheckFreeze do
+
+
+			local args = {
+				[1] = true
+			}
+
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.UserInfoService.RF.SetWindowStatus:InvokeServer(unpack(args))
+
+
+			wait(0.05)
+
+		end
+		
+	end    
+})
+
+
+
+PaycheckTab:AddParagraph("Be careful!","Make sure you dont have Anti Paycheck Freezing enabled at the same time as auto case opening")
+
+local AntiPaycheckFreeze = false
+PaycheckSection:AddToggle({
+	Name = "Anti Paycheck Freeze",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			AntiPaycheckFreeze = true
+			OrionLib:MakeNotification({
+				Name = "Paycheck Notification",
+				Content = "Anti Paycheck Freezing Enabled",
+				Image = "rbxassetid://14264899686",
+				Time = 5
+			})
+
+			
+		else
+			AntiPaycheckFreeze = false
+			OrionLib:MakeNotification({
+				Name = "Paycheck Notification",
+				Content = "Anti Paycheck Freezing Disabled",
+				Image = "rbxassetid://14264899686",
+				Time = 5
+			})
+
+		end
+		
+		while AntiPaycheckFreeze do
+			local args = {
+				[1] = "Bottomg Case"
+			}
+
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.CaseService.RF.OpenRequest:InvokeServer(unpack(args))
+
+
+			wait(100)
+		end
+
+
+	end  	
+})
+
+-- Paycheck end
+
+
+-- Rain 
+
+local RainTab = ScriptWindow:MakeTab({
+	Name = "Rain",
+	Icon = "rbxassetid://14264899686",
+	PremiumOnly = false
+})
+
+local RainSection = RainTab:AddSection({
+	Name = "Rain"
+})
+
+local AutoJoinRain = false
+RainSection:AddToggle({
+	Name = "Auto Join Rain",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			AutoJoinRain = true
+			OrionLib:MakeNotification({
+				Name = "Rain Notification",
+				Content = "Auto Rain Enabled",
+				Image = "rbxassetid://14264899686",
+				Time = 5
+			})
+		else
+			AutoJoinRain = false
+			OrionLib:MakeNotification({
+				Name = "Rain Notification",
+				Content = "Auto Rain Disabled",
+				Image = "rbxassetid://14264899686",
+				Time = 5
+			})
+		end
+
+		while AutoJoinRain do
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.RainService.RF.JoinRain:InvokeServer()
+
+
+			wait(5)
+		end
+
+
+	end  	
+})
+
+
+RainSection:AddTextbox({
+	Name = "Create Rain",
+	Default = "Rain Amount",
+	TextDisappear = true,
+	Callback = function(Value)
+		local args = {
+			[1] = tonumber(Value)
+		}
+
+		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.RainService.RF.CreateRain:InvokeServer(unpack(args))
+	end	  
+})
+
+
+-- Rain end
+
+
+-- Cases
+local CasesTab = ScriptWindow:MakeTab({
+	Name = "Cases",
+	Icon = "rbxassetid://14264899686",
+	PremiumOnly = false
+})
+
+local CasesSection = CasesTab:AddSection({
+	Name = "Cases"
+})
+
+CasesSection:AddTextbox({
+	Name = "Open Case",
+	Default = "Input Case Name",
+	TextDisappear = true,
+	Callback = function(Value)
+		local args = {
+			[1] = Value
+		}
+
+		game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.CaseService.RF.OpenRequest:InvokeServer(unpack(args))
+
+	end	  
+})
+CasesSection:AddParagraph("How to use auto case","Put in the type of case you want to auto open in the text box below and it will start opening it. To cancel it from opening, type None")
+
+local CaseToOpen = "None"
+CasesSection:AddTextbox({
+	Name = "Auto Open Case",
+	Default = "Input Case Name",
+	TextDisappear = true,
+	Callback = function(Value)
+		CaseToOpen = Value
+		while CaseToOpen ~= "None" do
+			local args = {
+				[1] = Value
+			}
+		
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.CaseService.RF.OpenRequest:InvokeServer(unpack(args))
+			wait(8.5)
+		end
+
+	end	  
+})
+
+
+
+--Cases End 
+
+
+local CaseBattlesTab = ScriptWindow:MakeTab({
+	Name = "Case Battles",
+	Icon = "rbxassetid://14264899686",
+	PremiumOnly = false
+})
+
+
+local CaseBattlesSection = CaseBattlesTab:AddSection({
+	Name = "CaseBattles"
+})
+
+local CaseBattlePlayerAmount ="1v1"
+CaseBattlesSection:AddDropdown({
+	Name = "Case Battle Players",
+	Default = "1",
+	Options = {"1v1", "1v1v1", "2v2", "1v1v1v1", "3v3"},
+	Callback = function(Value)
+		CaseBattlePlayerAmount = Value
+	end    
+})
+
+local CaseBattleFunding = 0
+CaseBattlesSection:AddDropdown({
+	Name = "CaseBattleFunding",
+	Default = "1",
+	Options = {"0", "5", "10", "15", "20", "25", "30", "35", "40", "45", "50"},
+	Callback = function(Value)
+		CaseBattleFunding = tonumber(Value)
+	end    
+})
+
+local CaseBattleSpeed = "Slow"
+CaseBattlesSection:AddDropdown({
+	Name = "CaseBattleSpeed",
+	Default = "1",
+	Options = {"Slow", "Fast"},
+	Callback = function(Value)
+		CaseBattleSpeed = Value
+		
+	end    
+})
+
+local CaseBattleCaseType = "None"
+CaseBattlesSection:AddTextbox({
+	Name = "Case Battle Case Type",
+	Default = "Input Case",
+	TextDisappear = false,
+	Callback = function(Value)
+		CaseBattleCaseType = Value
+	end	  
+})
+local CaseBattleCaseAmount = 1
+CaseBattlesSection:AddSlider({
+	Name = "Case Amount",
+	Min = 1,
+	Max = 49,
+	Default = 1,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Cases",
+	Callback = function(Value)
+		CaseBattleCaseAmount = tonumber(Value)
+	end    
+})
+
+local CaseBattleMode = "Standard"
+CaseBattlesSection:AddDropdown({
+	Name = "CaseBattleMode",
+	Default = "1",
+	Options = {"Standard", "Crazy"},
+	Callback = function(Value)
+		CaseBattleMode = Value
+
+	end    
+})
+local AutoCaseBattleEnabled = false
+CaseBattlesSection:AddToggle({
+	Name = "Toggle Auto Case",
+	Default = false,
+	Callback = function(Value)
+		
+		if Value then
+			AutoCaseBattleEnabled = true
+		else
+			AutoCaseBattleEnabled = false
+		end
+		
+		while AutoCaseBattleEnabled do
+			wait(2)
+			
+			local args = {
+				[1] = {
+					["Players"] = CaseBattlePlayerAmount,
+					["Funding"] = CaseBattleFunding,
+					["Speed"] = CaseBattleSpeed,
+					["UINF"] = {
+						["OwnsVIP"] = true,
+						["OwnsFO"] = true
+					},
+					["Cases"] = {
+						[CaseBattleCaseType] = CaseBattleCaseAmount
+					},
+					["Mode"] = CaseBattleMode
+				}
+			}
+
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.BattleService.RF.CreateBattle:InvokeServer(unpack(args))
+			
+			wait(1)
+			local ActiveCaseBattles = game.Players.LocalPlayer.PlayerGui.Game.Menus.CaseBattles.Box.List.Cases:GetChildren()
+			for i, CaseBattle in pairs(ActiveCaseBattles) do
+				if CaseBattle.ClassName == "Frame" then
+					if CaseBattle.Name ~= "Template" then
+							print(CaseBattle.Name)
+							local args = {
+								[1] = CaseBattle.Name,
+								[2] = 2
+							}
+							game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.BattleService.RF.CallBot:InvokeServer(unpack(args))
+							local args = {
+								[1] = CaseBattle.Name,
+								[2] = 3
+							}
+							game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.BattleService.RF.CallBot:InvokeServer(unpack(args))
+							local args = {
+								[1] = CaseBattle.Name,
+								[2] = 4
+							}
+							game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.BattleService.RF.CallBot:InvokeServer(unpack(args))
+							local args = {
+								[1] = CaseBattle.Name,
+								[2] = 5
+							}
+							game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.BattleService.RF.CallBot:InvokeServer(unpack(args))
+							local args = {
+								[1] = CaseBattle.Name,
+								[2] = 6
+							}
+							game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.BattleService.RF.CallBot:InvokeServer(unpack(args))
+					end
+				end
+			end
+		end	
+	end    
+})
+
+
+
+
+
+
+
+
+
+--Case Battles End
+
+
+--Jackpot
+local AmountInputted = 0
+local AutoJoinJackPot = false
+local jackPotTab = ScriptWindow:MakeTab({
+	Name = "Jackpot",
+	Icon = "rbxassetid://14264899686",
+	PremiumOnly = false
+})
+
+
+local jackPotSection = jackPotTab:AddSection({
+	Name = "Jackpot"
+})
+
+ 
+jackPotSection:AddTextbox({
+	Name = "Amount To Add to Jackpot",
+	Default = "Input Amount",
+	TextDisappear = false,
+	Callback = function(Value)
+	AmountInputted = Value
+	end	  
+})
+
+jackPotSection:AddToggle({
+	Name = "Auto Jackpot",
+	Default = false,
+	Callback = function(Value)
+		if Value then
+			AutoJoinJackPot = true
+		else
+			AutoJoinJackPot = false
+		end
+		
+		while AutoJoinJackPot  do
+			wait(1)
+			local args = {
+				[1] = tonumber(AmountInputted)
+			}
+
+			game:GetService("ReplicatedStorage").Packages._Index["sleitnick_knit@1.4.7"].knit.Services.CashpotService.RF.PlaceBet:InvokeServer(unpack(args))
+
+		end
+		
+	end    
+})
+
+--Jackpot End
